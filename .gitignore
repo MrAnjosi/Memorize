@@ -88,3 +88,22 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+.DS_Store
+Carthage
+*.xcuserstate
+wlavapp.xcodeproj/xcuserdata/
+
+
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+
+fastlane
+build
+
+.vscode/*
