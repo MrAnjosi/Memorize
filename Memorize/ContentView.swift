@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    var viewModel: EmojiMemoryGame
     //conhecida como properties
     var body: some View {
         //        é exatamente ao zstack, so que ele serve para encapsular
@@ -18,8 +19,11 @@ struct ContentView: View {
             //        foreach ele espera um array
             //        mas ele aceita um range tambem
             //        sendo que o index seria as posiçoes que ele esta percorrendo
-            ForEach(0..<4) { index in
-                CardView(isFaceUp: false)
+            ForEach(viewModel.cards) { card in
+                CardView(card: card)
+                    .onTapGesture {
+                        viewModel.choose(card: card)
+                    }
             }
         }
         //      colocar parametros fora da stack, assume que todos seus
@@ -32,13 +36,13 @@ struct ContentView: View {
 }
 
 struct CardView: View {
-    var isFaceUp: Bool
+    var card: MemoryGame<String>.Card
     
     var body: some View{
         //      para poder empilhar componentes se usa o zstack com
         //      content e colocando dentro dos parenteses
         ZStack {
-            if isFaceUp {
+            if card.isFaceUp {
                 //            como no swift nao tem como alterar a cor do retangulo
                 //            coloca outro e ele assumira a cor do pai
                 //            o fill para preencher ao inves de traçar
@@ -49,7 +53,7 @@ struct CardView: View {
                 
                 //            texto com emoji, swift aceita diretamente eles.
                 //            edit>emojis
-                Text("👻")
+                Text(card.content)
             }else{
                 //            para fazer as cartas ficarem viradas
                 RoundedRectangle(cornerRadius: 10.0).fill()
@@ -60,6 +64,6 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel:  EmojiMemoryGame())
     }
 }
